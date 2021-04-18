@@ -1,2 +1,14 @@
 # mock_apollo_server
-A mock ctrip apollo server in Python
+This project is developed to mock Apollo (Ctrip) server APIs in python.
+
+## Feature support
+This project currently supports 3 APIs for fetching config:
+* GET /configs/:appId/:cluster/:namespace
+* GET /configfiles/json/:appId/:cluster/:namespace
+* GET /services/config
+* TODO: GET /notifications/v2 _(long polling)_
+
+# Usage Guide
+
+`$ python3 server.py`
+
