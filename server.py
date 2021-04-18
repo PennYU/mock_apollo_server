@@ -39,7 +39,7 @@ def after(response):
 
 @api.route('/services/config', methods=['GET'])
 def get_services_config():
-  return services_config
+  return json.dumps(services_config)
 
 @api.route("/configs/<app_id>/<cluster>/<namespace>")
 def configs(app_id, cluster, namespace):
@@ -53,14 +53,14 @@ def configs(app_id, cluster, namespace):
   load_properties(configurations, app_id, default_cluster, namespace)
   load_properties(configurations, app_id, cluster, namespace)
   data["configurations"] = configurations
-  return data
+  return json.dumps(data)
 
 @api.route("/configfiles/json/<app_id>/<cluster>/<namespace>")
 def config_files_json(app_id, cluster, namespace):
   data = {}
   load_properties(data, app_id, default_cluster, namespace)
   load_properties(data, app_id, cluster, namespace)
-  return data
+  return json.dumps(data)
 
 if __name__ == '__main__':
     api.run(threaded=True,host='0.0.0.0', port=8080)
