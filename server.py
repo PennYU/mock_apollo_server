@@ -1,4 +1,4 @@
-from flask import Flask, json
+from flask import Flask, json, request
 from os import path
 
 data_folder = "data"
@@ -41,7 +41,7 @@ def after(response):
 def get_services_config():
   return json.dumps(services_config)
 
-@api.route("/configs/<app_id>/<cluster>/<namespace>")
+@api.route("/configs/<app_id>/<cluster>/<namespace>", methods=['GET'])
 def configs(app_id, cluster, namespace):
   data = {
     "appId": app_id,
@@ -55,12 +55,16 @@ def configs(app_id, cluster, namespace):
   data["configurations"] = configurations
   return json.dumps(data)
 
-@api.route("/configfiles/json/<app_id>/<cluster>/<namespace>")
+@api.route("/configfiles/json/<app_id>/<cluster>/<namespace>", methods=['GET'])
 def config_files_json(app_id, cluster, namespace):
   data = {}
   load_properties(data, app_id, default_cluster, namespace)
   load_properties(data, app_id, cluster, namespace)
   return json.dumps(data)
+
+@api.route("/notifications/v2", methods=['GET'])
+def notifications():
+  return request.args.get("notifications")
 
 if __name__ == '__main__':
     api.run(threaded=True,host='0.0.0.0', port=8080)
